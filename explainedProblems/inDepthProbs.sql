@@ -3,3 +3,6 @@
 -- select within select(sec 4): problem 9
 -- join (sec 6): problem 11
 -- join (sec 6): problem 13
+-- more join (sec 7): problem 12
+-- more join (sec 7): problem 13
+-- more join (sec 7): problem 14
