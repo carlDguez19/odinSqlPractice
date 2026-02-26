@@ -70,7 +70,6 @@ ON (teacher.dept=dept.id)
 
 -- Solution:
 SELECT COUNT(name), COUNT(mobile) FROM teacher
-WHERE name IS NOT NULL || mobile IS NOT NULL
 
 
 -- Exercise 7: Use COUNT and GROUP BY dept.name to show each department and the number of staff. Use a RIGHT JOIN to ensure that the Engineering department is listed.
@@ -86,7 +85,7 @@ GROUP BY dept.name
 
 -- Solution:
 SELECT name,
-CASE WHEN dept = 1 || dept = 2
+CASE WHEN dept = 1 OR dept = 2
 THEN 'Sci'
 ELSE 'Art'
 END dep
@@ -97,7 +96,7 @@ FROM teacher
 
 -- Solution:
 SELECT name,
-CASE WHEN dept = 1 || dept = 2
+CASE WHEN dept = 1 OR dept = 2
 THEN 'Sci'
 WHEN dept = 3
 THEN 'Art'
