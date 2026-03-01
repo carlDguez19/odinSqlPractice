@@ -1,5 +1,6 @@
 -- Use the following table to answer the questions from this section
 
+-- Table: world
 -- +--------------+-------------+---------+------------+-------------+
 -- | name         | continent   | area    | population | gdp         |
 -- +--------------+-------------+---------+------------+-------------+

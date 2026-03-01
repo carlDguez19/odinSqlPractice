@@ -6,3 +6,5 @@
 -- more join (sec 7): problem 12
 -- more join (sec 7): problem 13
 -- more join (sec 7): problem 14
+-- self join (sec 9): problem 9
+-- self join (sec 9): problem 10
