@@ -1,4 +1,4 @@
--- Problem: More join; problem 12
+-- Problem: More join; problem 14
 
 -- Table: movie
 -- +-------+-----------------------+------+----------+----------+-----------+
@@ -28,21 +28,20 @@
 -- +----+--------------------+
 
 -- Problem Summary:
--- This problem is asking to find all the movies Julie Andrews acted in, and who the leading actor was for each of those movies.
--- We first need to find the movieid of all the movies Julie Andrews appeared in. After finding all those movieid's, we find the lead actor(ord=1)
--- of each of those movies.
+-- List the films released in the year 1978 ordered by the number of actors in the cast, then by title.
+-- This problem is asking to list films released in 1978 based on which movie had the most actors, then by title of each movie.
+-- This requires to group everything by movie(title). We will count the actors in each movie. Then list each movie and the amount of actors
+-- in each movie in desccending order.
 
 -- Explanation:
--- 1. In the subquery we will return the movieid's by joining casting table and actor table and finding all the movies Julie Andrews was in.
--- 2. The outer query, since we are looking for movie titles and actor names, we join the movie table to the casting table.
--- 3. The casting table is then joined to the actor table.
--- 4. Filter results by the movie.id that the subquery returned and where the actor is the leading actor(ord=1)
+-- 1. Join the movie and casting tables
+-- 2. Filter all the 1978 movies
+-- 3. Group by movie(title)
+-- 4. Order by how many actors are in each movie in descending order, then by title of the movie
 
 -- Final Query:
-SELECT movie.title, actor.name FROM movie
+SELECT movie.title, COUNT(casting.actorid) FROM movie
 JOIN casting ON (movie.id = casting.movieid)
-JOIN actor ON (casting.actorid = actor.id)
-WHERE movie.id IN(SELECT movieid FROM casting
-JOIN actor ON actor.id = casting.actorid
-WHERE actor.name = 'Julie Andrews')
-AND ord =1
+WHERE yr = 1978
+GROUP BY movie.title
+ORDER BY COUNT(casting.actorid) DESC, movie.title
