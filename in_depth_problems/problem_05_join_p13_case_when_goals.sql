@@ -1,4 +1,4 @@
--- Problem: Join; problem 11
+-- Problem: Join; problem 13
 
 -- Table: game
 -- +------+--------------+---------------------------+-------+-------+
@@ -36,18 +36,24 @@
 -- +-----+----------------+------------------+
 
 -- Problem Summary:
--- This question is asking for the matchid, date and the number of goals scored on any game
--- involving Poland(POL). Apart from the JOIN that needs to be performed, the query must also check for
--- 'POL' on either team1 OR team2, and be able to count each goal at that game(group by game).
+-- This problem is asking to list every match with the goals scored by each team, along with the date of each game.
+-- Its stating that CASE WHEN will need to be used to give value to the goals. SUM will have to be used to add up
+-- all the goals we gave out with CASE WHEN. Grouping by date will be necessary to be able to count the goals.
 
 -- Explanation:
--- 1. Use LEFT JOIN to join game table(id, mdate) and goal table(matchid). LEFT JOIN includes games with 0 goals, if any.
--- 2. Filter for POL(Poland), checking both in team1 OR team2
--- 3. Count the goals in each match
--- 4. Group the results by game, then by date, so the goals can be grouped per game.
+-- 1. Use LEFT JOIN to join game table(mdate, team1, team2) and goal table. LEFT JOIN includes games with 0 goals, if any.
+-- 2. After we join the tables, if the team that scored the goal is team1 then award 1 else award 0. All of this using CASE WHEN.
+-- 3. SUM the awarded points for goals
+-- 4. Repeat step 2 and 3 but this time checking for team2
+-- 5. Group the results by date, then by team1, team2, then game.id
+-- 6. Then order everthing by date, id, team1, and team2
 
 -- Final Query:
-SELECT game.id,mdate, COUNT(goal.matchid)
-FROM game LEFT JOIN goal ON matchid = id 
-WHERE (team1 = 'POL' OR team2 = 'POL')
-GROUP BY game.id, game.mdate
+SELECT game.mdate,
+game.team1,
+SUM(CASE WHEN goal.teamid=game.team1 THEN 1 ELSE 0 END) as score1,
+game.team2,
+SUM(CASE WHEN goal.teamid=game.team2 THEN 1 ELSE 0 END) as score2
+FROM game LEFT JOIN goal ON goal.matchid = game.id
+GROUP BY game.mdate, game.team1, game.team2, game.id
+ORDER BY game.mdate, game.id, game.team1, game.team2
